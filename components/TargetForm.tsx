@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { HashLoader } from 'react-spinners';
+import {chat} from 'chat';
+
 
 export default function TargetForm() {
   const router = useRouter();
@@ -19,9 +21,9 @@ export default function TargetForm() {
     event.preventDefault();
     setIsLoading(true);
 
-    const formUrl = PROD_URL || TEST_URL + '/formData';
-    const resData = await fetch(formUrl, {
-      method: 'POST',
+    const endpointUrl = PROD_URL || TEST_URL +'/chat?query=' + encodeURIComponent(url);
+    const resData = await fetch(endpointUrl, {
+      method: 'GET',
       body: convertFormData(url),
     })
       .then((res) => {
@@ -59,7 +61,6 @@ export default function TargetForm() {
 const convertFormData = (url: string) => {
   const nativeFormData = new FormData();
   nativeFormData.append('url', url);
-
   return nativeFormData;
 };
 
