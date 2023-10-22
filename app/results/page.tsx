@@ -6,15 +6,17 @@ import { useSearchParams } from 'next/navigation';
 
 export default function Results() {
   const rawData = useSearchParams().get('data') || '';
+  console.log(`raw:`, rawData);
   let results: any[] = [];
   try {
     results = JSON.parse(decodeURIComponent(rawData));
   } catch (error) {
     console.log(error);
   }
+  console.log(`results:`, results);
   const rows =
-    results.length > 1 ? (
-      results.map((result, index) => <SingleResult key={index} data={result} />)
+    results.length > 0 ? (
+      results.map((result) => <SingleResult data={result} />)
     ) : (
       <ErrorText>🙊 Encountered an error, please try again</ErrorText>
     );
