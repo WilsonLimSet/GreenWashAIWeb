@@ -7,8 +7,7 @@ import { styled } from 'styled-components';
 import { HashLoader } from 'react-spinners';
 import {chat} from 'chat';
 
-
-export default function TargetForm() {
+export default function TargetForm() {  
   const router = useRouter();
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +20,10 @@ export default function TargetForm() {
     event.preventDefault();
     setIsLoading(true);
 
-    const endpointUrl = PROD_URL || TEST_URL +'/chat?query=' + encodeURIComponent(url);
+    const endpointUrl = (PROD_URL || TEST_URL) + '/chat?query=' + encodeURIComponent(url);
+
     const resData = await fetch(endpointUrl, {
-      method: 'GET',
-      body: convertFormData(url),
+      method: 'GET'
     })
       .then((res) => {
         if (!res.ok) {
@@ -35,9 +34,10 @@ export default function TargetForm() {
       })
       .catch((err) => console.log(`Error:`, err));
 
-    router.push(
-      `/results?data=${encodeURIComponent(resData.questions.join('|||'))}`
-    );
+    // Handle response data as per your needs.
+    router.push(`/results?data=${encodeURIComponent(JSON.stringify(resData))}`);
+
+    
   };
 
   return (

@@ -10,7 +10,9 @@ export default function Navbar() {
   return (
     <NavbarDiv>
       <Title>
-        <Link href="/"></Link>
+        <Link href="/">  
+            🌲 
+          </Link>
       </Title>
     </NavbarDiv>
   );
