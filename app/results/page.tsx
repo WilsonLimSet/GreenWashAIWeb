@@ -6,23 +6,15 @@ import { useSearchParams } from 'next/navigation';
 
 export default function Results() {
   const rawData = useSearchParams().get('data') || '';
-  const results = JSON.parse(decodeURIComponent(rawData));
-  let parsedData;
-  try {
-    if (rawData) {
-      parsedData = JSON.parse(decodeURIComponent(rawData));
-    }
-  } catch (error) {
-    console.error('Failed to parse JSON:', error);
-    parsedData = null;
-  }
+  const results: any[] = JSON.parse(decodeURIComponent(rawData));
+  const rows = results.map((result) => <SingleResult data={result} />);
 
   return (
     <ResultsDiv>
       <Navbar />
       <MainBody>
         <SectionHeader>Greenwash Analysis</SectionHeader>
-        {parsedData && <SingleResult data={parsedData} />}
+        {rows}
       </MainBody>
     </ResultsDiv>
   );
@@ -33,7 +25,7 @@ const StyledInfoItem = styled.div`
   font-size: 18px;
   font-family: Inter;
   font-weight: 400;
-  color: #aeaeae;
+  color: #6c757d;
 `;
 
 const ResultsContainer = styled.div`
@@ -45,9 +37,10 @@ const ResultsContainer = styled.div`
 `;
 
 const ResultsTitle = styled.h3`
-  font-size: 20px;
+  font-size: 24px;
   font-family: Inter;
   font-weight: 600;
+  margin: 0 0 20px 0;
 `;
 
 const ResultsList = styled.ul`
@@ -59,16 +52,14 @@ const ResultsListItem = styled.li`
   margin-bottom: 10px;
 `;
 
+const ResultName = styled.span`
+  font-weight: 700;
+  color: #27292a;
+`;
+
 const ErrorText = styled.p`
   color: red;
 `;
-
-interface SingleAnalysis {
-  userViolation: string;
-  reason: string;
-  sectionNumber: string;
-  recommendation: string;
-}
 
 function SingleResult({ data }: { data: any }) {
   if (!data) {
@@ -81,20 +72,26 @@ function SingleResult({ data }: { data: any }) {
       <ResultsList>
         <ResultsListItem>
           <StyledInfoItem>
-            User violation: {data[0].user_violation}
-          </StyledInfoItem>
-        </ResultsListItem>
-        <ResultsListItem>
-          <StyledInfoItem>Reason: {data[0].reason}</StyledInfoItem>
-        </ResultsListItem>
-        <ResultsListItem>
-          <StyledInfoItem>
-            Section number: {data[0].section_number}
+            <ResultName>User violation: </ResultName>
+            {data.user_violation}
           </StyledInfoItem>
         </ResultsListItem>
         <ResultsListItem>
           <StyledInfoItem>
-            Recommendation: {data[0].recommendation}
+            <ResultName>Reason: </ResultName>
+            {data.reason}
+          </StyledInfoItem>
+        </ResultsListItem>
+        <ResultsListItem>
+          <StyledInfoItem>
+            <ResultName>Section number: </ResultName>
+            {data.section_number}
+          </StyledInfoItem>
+        </ResultsListItem>
+        <ResultsListItem>
+          <StyledInfoItem>
+            <ResultName>Recommendation: </ResultName>
+            {data.recommendation}
           </StyledInfoItem>
         </ResultsListItem>
       </ResultsList>
@@ -102,7 +99,10 @@ function SingleResult({ data }: { data: any }) {
   );
 }
 
-const ResultsDiv = styled.main``;
+const ResultsDiv = styled.main`
+  width: 80%;
+  margin: auto;
+`;
 
 const MainBody = styled.section`
   margin: 0 auto;
