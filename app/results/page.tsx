@@ -14,7 +14,7 @@ export default function Results() {
   }
   const rows =
     results.length > 1 ? (
-      results.map((result) => <SingleResult data={result} />)
+      results.map((result, index) => <SingleResult key={index} data={result} />)
     ) : (
       <ErrorText>🙊 Encountered an error, please try again</ErrorText>
     );
