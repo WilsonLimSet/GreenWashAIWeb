@@ -7,7 +7,7 @@ import _ from 'lodash';
 export default function EditOnClick() {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(
-    `Stranger #${Math.ceil(Math.random() * 1000)}`
+    `Greenwashing Suggestion #${Math.ceil(Math.random() * 1000)}`
   );
 
   const editStart = () => setIsEditing(true);
