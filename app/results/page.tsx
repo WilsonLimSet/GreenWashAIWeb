@@ -6,8 +6,18 @@ import { useSearchParams } from 'next/navigation';
 
 export default function Results() {
   const rawData = useSearchParams().get('data') || '';
-  const results: any[] = JSON.parse(decodeURIComponent(rawData));
-  const rows = results.map((result) => <SingleResult data={result} />);
+  let results: any[] = [];
+  try {
+    results = JSON.parse(decodeURIComponent(rawData));
+  } catch (error) {
+    console.log(error);
+  }
+  const rows =
+    results.length > 1 ? (
+      results.map((result) => <SingleResult data={result} />)
+    ) : (
+      <ErrorText>🙊 Encountered an error, please try again</ErrorText>
+    );
 
   return (
     <ResultsDiv>
@@ -58,7 +68,10 @@ const ResultName = styled.span`
 `;
 
 const ErrorText = styled.p`
-  color: red;
+  text-align: left;
+  font-size: 20px;
+  font-family: Inter;
+  font-weight: 500;
 `;
 
 function SingleResult({ data }: { data: any }) {
