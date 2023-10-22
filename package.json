@@ -1,0 +1,28 @@
+{
+  "name": "coffee-chat-ai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.195",
+    "@types/node": "20.3.1",
+    "@types/react": "18.2.12",
+    "@types/react-dom": "18.2.5",
+    "@types/styled-components": "^5.1.26",
+    "dotenv": "^16.3.1",
+    "eslint": "8.43.0",
+    "eslint-config-next": "13.4.6",
+    "lodash": "^4.17.21",
+    "next": "13.4.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-spinners": "^0.13.8",
+    "styled-components": "^6.0.0-rc.1",
+    "typescript": "5.1.3"
+  }
+}
