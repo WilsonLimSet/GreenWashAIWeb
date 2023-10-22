@@ -1,19 +1,19 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Navbar from '@/components/Navbar';
-import EditOnClick from '@/components/EditOnClick';
 import { useSearchParams } from 'next/navigation';
 
 export default function Results() {
-  const rawData = useSearchParams().get('data');
+  const rawData = useSearchParams().get('data') || '';
+  const results = JSON.parse(decodeURIComponent(rawData));
   let parsedData;
   try {
     if (rawData) {
       parsedData = JSON.parse(decodeURIComponent(rawData));
     }
   } catch (error) {
-    console.error("Failed to parse JSON:", error);
+    console.error('Failed to parse JSON:', error);
     parsedData = null;
   }
 
@@ -21,25 +21,19 @@ export default function Results() {
     <ResultsDiv>
       <Navbar />
       <MainBody>
-        <BasicInfo>
-          <NameContainer>
-            <EditOnClick />
-          </NameContainer>
-        </BasicInfo>
-        <SectionHeader>What to Change 🤔</SectionHeader>
-        {parsedData && <ResultsPanel data={parsedData} />}
+        <SectionHeader>Greenwash Analysis</SectionHeader>
+        {parsedData && <SingleResult data={parsedData} />}
       </MainBody>
     </ResultsDiv>
   );
 }
-
 
 const StyledInfoItem = styled.div`
   margin-bottom: 10px;
   font-size: 18px;
   font-family: Inter;
   font-weight: 400;
-  color: #AEAEAE;
+  color: #aeaeae;
 `;
 
 const ResultsContainer = styled.div`
@@ -69,7 +63,14 @@ const ErrorText = styled.p`
   color: red;
 `;
 
-function ResultsPanel({ data }: { data: any }) {
+interface SingleAnalysis {
+  userViolation: string;
+  reason: string;
+  sectionNumber: string;
+  recommendation: string;
+}
+
+function SingleResult({ data }: { data: any }) {
   if (!data) {
     return <ErrorText>No data</ErrorText>;
   }
@@ -79,19 +80,27 @@ function ResultsPanel({ data }: { data: any }) {
       <ResultsTitle>Results</ResultsTitle>
       <ResultsList>
         <ResultsListItem>
-          <StyledInfoItem>User violation: {data.user_violation}</StyledInfoItem>
+          <StyledInfoItem>
+            User violation: {data[0].user_violation}
+          </StyledInfoItem>
         </ResultsListItem>
         <ResultsListItem>
-          <StyledInfoItem>Section number: {data.section_number}</StyledInfoItem>
+          <StyledInfoItem>Reason: {data[0].reason}</StyledInfoItem>
         </ResultsListItem>
         <ResultsListItem>
-          <StyledInfoItem>Recommendation: {data.recommendation}</StyledInfoItem>
+          <StyledInfoItem>
+            Section number: {data[0].section_number}
+          </StyledInfoItem>
+        </ResultsListItem>
+        <ResultsListItem>
+          <StyledInfoItem>
+            Recommendation: {data[0].recommendation}
+          </StyledInfoItem>
         </ResultsListItem>
       </ResultsList>
     </ResultsContainer>
   );
 }
-
 
 const ResultsDiv = styled.main``;
 
@@ -101,23 +110,9 @@ const MainBody = styled.section`
 `;
 
 const SectionHeader = styled.h2`
-  font-size: 18px;
+  font-size: 28px;
   font-family: Inter;
   font-weight: 600;
   text-align: left;
   margin: 40px 0 20px 0;
 `;
-
-const BasicInfo = styled.div`
-  width: 50%;
-  display: flex;
-  align-items: center;
-`;
-
-const NameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 30px;
-`;
-
-

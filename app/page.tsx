@@ -11,7 +11,7 @@ export default function Home() {
       <Navbar />
       <BodyWrapper>
         <Body>
-          <Prompt>Enter your marketing material!</Prompt>
+          <Prompt>Enter marketing material</Prompt>
           <TargetForm />
         </Body>
       </BodyWrapper>
