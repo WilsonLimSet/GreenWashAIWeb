@@ -21,9 +21,7 @@ export default function TargetForm() {
     setIsLoading(true);
 
     const endpointUrl =
-      (PROD_URL || TEST_URL) +
-      '/chat?query=' +
-      encodeURIComponent(inputValue || placeholder);
+      TEST_URL + '/chat?query=' + encodeURIComponent(inputValue || placeholder);
 
     const resData = await fetch(endpointUrl, {
       method: 'GET',
@@ -36,6 +34,8 @@ export default function TargetForm() {
         return res.json();
       })
       .catch((err) => console.log(`Error:`, err));
+
+    console.log(`res`, resData);
 
     // Handle response data as per your needs.
     router.push(`/results?data=${encodeURIComponent(JSON.stringify(resData))}`);
