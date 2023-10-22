@@ -5,25 +5,28 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { HashLoader } from 'react-spinners';
-import {chat} from 'chat';
 
-export default function TargetForm() {  
+export default function TargetForm() {
   const router = useRouter();
-  const [url, setUrl] = useState('');
+  const placeholder = `Example: Scott's facial cream is certified organic, USDA organic and vegan`;
+  const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsLoading(true);
 
-    const endpointUrl = (PROD_URL || TEST_URL) + '/chat?query=' + encodeURIComponent(url);
+    const endpointUrl =
+      (PROD_URL || TEST_URL) +
+      '/chat?query=' +
+      encodeURIComponent(inputValue || placeholder);
 
     const resData = await fetch(endpointUrl, {
-      method: 'GET'
+      method: 'GET',
     })
       .then((res) => {
         if (!res.ok) {
@@ -36,16 +39,14 @@ export default function TargetForm() {
 
     // Handle response data as per your needs.
     router.push(`/results?data=${encodeURIComponent(JSON.stringify(resData))}`);
-
-    
   };
 
   return (
     <FormDiv onSubmit={onSubmit}>
       <Input
         type="text"
-        value={url}
-        placeholder="Example: Scott's facial cream is certified organic, USDA organic and vegan"
+        value={inputValue}
+        placeholder={placeholder}
         onChange={onChange}
       />
 
@@ -57,12 +58,6 @@ export default function TargetForm() {
     </FormDiv>
   );
 }
-
-const convertFormData = (url: string) => {
-  const nativeFormData = new FormData();
-  nativeFormData.append('url', url);
-  return nativeFormData;
-};
 
 const FormDiv = styled.form`
   margin: 0;
@@ -101,8 +96,13 @@ const SubmitButton = styled.button`
   width: 80px;
   height: 80px;
   border-radius: 12px;
-  background-color: #ccb494;
+  background-color: #9caf88;
   margin-left: 10px;
+
+  &:hover {
+    background-color: #758467;
+    transition: background-color 0.2s ease-in-out;
+  }
 `;
 
 const RightArrow = styled.img`

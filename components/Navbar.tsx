@@ -1,18 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export default function Navbar() {
-  const [selectedBreadcrumb, setSelectedBreadcrumb] = useState('Generate');
   return (
     <NavbarDiv>
       <Title>
-        <Link href="/">  
-            🌲 
-          </Link>
+        <Link href="/">🌲</Link>
       </Title>
     </NavbarDiv>
   );
@@ -25,15 +21,10 @@ const NavbarDiv = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 32px;
+  font-size: 48px;
   font-family: Inter;
   font-weight: 800;
   cursor: pointer;
-`;
-
-const Breadcrumbs = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 interface IUnderlineAnimation {
@@ -70,11 +61,4 @@ const TargetText = styled.p`
     transform: scaleX(1);
     transform-origin: bottom left;
   }
-`;
-
-const LoginButton = styled.button``;
-
-const Image = styled.img`
-  width: 100px;
-  height: 70px;
 `;

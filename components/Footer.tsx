@@ -5,8 +5,7 @@ import { styled } from 'styled-components';
 export default function Footer() {
   return (
     <FooterDiv>
-      <Builders>Built by @limsetia and @scottsus
-</Builders>
+      <Builders>Built by 👨‍💻 @limsetia and 🎨 @scottsus</Builders>
     </FooterDiv>
   );
 }
