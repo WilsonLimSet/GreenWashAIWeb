@@ -13,10 +13,9 @@ export default function Results() {
   } catch (error) {
     console.log(error);
   }
-  console.log(`results:`, results);
   const rows =
     results.length > 0 ? (
-      results.map((result, index) => <SingleResult key={index} data={result} />)
+      results.map((result) => <SingleResult key={result} data={result} />)
     ) : (
       <ErrorText>🙊 Encountered an error, please try again</ErrorText>
     );
