@@ -13,7 +13,6 @@ export default function Results() {
   } catch (error) {
     console.log(error);
   }
-  console.log(`results:`, results);
   const rows =
     results.length > 0 ? (
       results.map((result) => <SingleResult data={result} />)
